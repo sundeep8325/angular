@@ -1,0 +1,11 @@
+*.sw*
+
+build/
+bin/
+node_modules/
+vendor/
+
+# GIT Files
+#-------------------------
+
+.git/*
