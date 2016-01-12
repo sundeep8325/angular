@@ -39,13 +39,13 @@ module.exports = {
    */
   test_files: {
     js: [
-      'vendor/angular-mocks/angular-mocks.js'
+      'bower_components/angular-mocks/angular-mocks.js'
     ]
   },
 
   /**
    * This is the same as `app_files`, except it contains patterns that
-   * reference vendor code (`vendor/`) that we need to place into the build
+   * reference vendor code (`bower_components/`) that we need to place into the build
    * process somewhere. While the `app_files` property ensures all
    * standardized files are collected for compilation, it is the user's job
    * to ensure non-standardized (i.e. vendor-related) files are handled
@@ -63,15 +63,18 @@ module.exports = {
    */
   vendor_files: {
     js: [
-		'vendor/angular/angular.js',
-		'vendor/angular-animate/angular-animate.min.js',
-		'vendor/angular-route/angular-route.min.js',
-		'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-		'vendor/jquery/dist/jquery.min.js',
-		'vendor/bootstrap/dist/js/bootstrap.min.js'
+		'bower_components/angular/angular.js',
+		'bower_components/angular-animate/angular-animate.min.js',
+		'bower_components/angular-route/angular-route.min.js',
+		'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+		'bower_components/jquery/dist/jquery.min.js',
+		'bower_components/bootstrap/dist/js/bootstrap.min.js',
+		'bower_components/angular-translate/angular-translate.min.js',
+		'bower_components/underscore/underscore-min.js',
+		'bower_components/restangular/dist/restangular.js',
+		'bower_components/restangular/dist/restangular.min.js'
     ],
     css: [
-		
 	],
     assets: [
 		'src/assets/**/*'

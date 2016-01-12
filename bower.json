@@ -1,14 +1,18 @@
 {
-  "name": "ng-boilerplate",
-  "version": "0.3.2",
+  "name": "ng-app",
+  "version": "0.1",
   "devDependencies": {
-	"angular": "1.4.x",
-	"angular-animate": "1.4.x",
-	"angular-mocks": "1.4.x",
-    "jquery": "~2.1.1",
-	"bootstrap": "~3.x.x",
+    "angular": "1.4.x",
+    "angular-animate": "1.4.x",
+    "angular-mocks": "1.4.x",
     "angular-bootstrap": "^0.14.0",
-    "angular-route": "1.4.x"
+    "angular-route": "1.4.x",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.x.x",
+    "restangular": "1.5.x",
+    "underscore": "~1.8.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "angular-translate": "~2.8.1"
+  }
 }

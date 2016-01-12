@@ -3,14 +3,17 @@ angular.module(
 	[
 		'templates-app',
 		'templates-common',
+		'angularApp.config',
 		'angularApp.header',
 		'angularApp.home',
 		'angularApp.about',
 		'ngAnimate',
-		'ngRoute'
+		'ngRoute',
+		'pascalprecht.translate',
+		'restangular'
 	]
 )
-.config(function configRoutes ($routeProvider) {
+.config(function configRoutes ($routeProvider,$locationProvider,$translateProvider,RestangularProvider,baseUrl) {
 
 	'use strict';
 	// Routes
@@ -18,31 +21,18 @@ angular.module(
 		.when('/', {
 			templateUrl: 'home/home.tpl.html',
 			controller: 'HomeController',
-			title:'Home',
+			pageTitle:'Home',
 			publicAccess: false
 		})
-		.when('/testStack', {
-			templateUrl: 'test-stack/test-stack.tpl.html',
-			controller: 'TestStackController',
-			title:'testStack.io',
+		.when('/about', {
+			templateUrl: 'about/about.tpl.html',
+			controller: 'AboutController',
+			pageTitle:'About',
 			publicAccess: false
-		})
-		.when('/monitorStack', {
-			templateUrl: 'monitor-stack/monitor-stack.tpl.html',
-			controller: 'MonitorStackController',
-			title:'monitorStack.io',
-			publicAccess: false
-		})
-		.when('/home', {
-			templateUrl: 'home/home.tpl.html',
-			controller: 'HomeController',
-			title:'stackTools.io',
-			publicAccess: true
 		})
 		.otherwise({
 			redirectTo: function (route, path, search) {
 				var redirectUrl = '/';
-
 				// Preserve query string on redirect.
 				if (search) {
 					var searchParams = Object.keys(search).map(function (paramName) {
@@ -56,20 +46,44 @@ angular.module(
 				return redirectUrl;
 			}
 		});
-
+		//check browser support
+       /*  if(window.history && window.history.pushState){
+			$locationProvider.html5Mode({
+				enabled: true,
+				requireBase: false
+			});
+        } */
+		RestangularProvider.setBaseUrl(baseUrl);
 	return;
 
 })
-.run( function run () {
-})
+.config(function configI18n ($translateProvider, englishTranslationsProvider,frenchTranslationsProvider) {
+	'use strict';
+	// Enable escaping of HTML
+	$translateProvider.useSanitizeValueStrategy('escape');
+	// i18n
+	$translateProvider.translations('en', englishTranslationsProvider.labels);
+	$translateProvider.translations('fr', frenchTranslationsProvider.labels);
+	$translateProvider.preferredLanguage('fr');
 
-.controller( 'AppCtrl', function AppCtrl ( $scope, $location ) {
-  $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-    if ( angular.isDefined( toState.data.pageTitle ) ) {
-      $scope.pageTitle = toState.data.pageTitle + ' | angularApp' ;
-    }
-  });
+	return;
 })
+.run(function afterConfig ($location, $rootScope, $route, $timeout, $http) {
 
-;
+	'use strict';
+	$http.defaults.headers.common.Accept = 'application/json';
+	
+	// Avoid anonymous users to skip login
+	$rootScope.$on('$routeChangeStart', function (event, newUrl, oldUrl) {
+		return;
+
+	});
+	$rootScope.$on('$routeChangeSuccess', function(event, currentRoute , previousRoute ){
+		//Change page title, based on Route information
+		if (currentRoute.hasOwnProperty('$$route')) {
+            $rootScope.pageTitle = currentRoute.$$route.pageTitle;
+        }
+	});
+	return;
+});
 
